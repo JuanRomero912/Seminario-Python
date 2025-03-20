@@ -28,7 +28,18 @@ for _ in range(3):
         print(f"{i + 1}. {answer}")
     # El usuario tiene 2 intentos para responder correctamente
     for intento in range(2):
-        user_answer = int(input("Respuesta: ")) - 1  
+        user_answer = input("Respuesta: ")
+        # chequeamos que no sea un digito y no un string cualquiera
+        if not user_answer.isdigit():
+            print("Respuesta no valida.")
+            sys.exit(1)        
+        #convertimos en un numero entero
+        user_answer = int(user_answer) - 1
+        #chequeamos que este en el rango
+        if user_answer < 0 or user_answer >= len(answers[question_index]):
+            print("Respuesta no valida.")
+            sys.exit(1)
+            
         # Se verifica si la respuesta es correcta
         if user_answer == correct_answers_index[question_index]:
             print("¡Correcto!")
