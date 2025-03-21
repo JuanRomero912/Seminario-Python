@@ -25,13 +25,15 @@ correct_answers_index = [1, 2, 0, 3, 1]
 
 score = 0
 
-questions_to_ask = random.choices(
+# Se seleccionan las 3 preguntas al azar y sin posibilidad de repetir
+questions_to_ask = random.sample(
     list(zip(questions, answers, correct_answers_index)),
     k=3
 )
 
-# El usuario deberá contestar 3 preguntas
 for question, options, correct_index in questions_to_ask:
+
+    # Se muestra la pregunta y las respuestas posibles
     print(question)
     for i, answer in enumerate(options):
         print(f"{i + 1}. {answer}")
