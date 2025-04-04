@@ -1,41 +1,3 @@
-rounds = [
-    {
-        'Shadow': {'kills': 2, 'assists': 1, 'deaths': True},
-        'Blaze': {'kills': 1, 'assists': 0, 'deaths': False},
-        'Viper': {'kills': 1, 'assists': 2, 'deaths': True},
-        'Frost': {'kills': 0, 'assists': 1, 'deaths': False},
-        'Reaper': {'kills': 1, 'assists': 1, 'deaths': False}
-    },
-    {
-        'Shadow': {'kills': 0, 'assists': 2, 'deaths': False},
-        'Blaze': {'kills': 2, 'assists': 0, 'deaths': True},
-        'Viper': {'kills': 1, 'assists': 1, 'deaths': False},
-        'Frost': {'kills': 2, 'assists': 1, 'deaths': True},
-        'Reaper': {'kills': 0, 'assists': 1, 'deaths': False}
-    },
-    {
-        'Shadow': {'kills': 1, 'assists': 0, 'deaths': False},
-        'Blaze': {'kills': 2, 'assists': 2, 'deaths': True},
-        'Viper': {'kills': 1, 'assists': 1, 'deaths': True},
-        'Frost': {'kills': 0, 'assists': 1, 'deaths': False},
-        'Reaper': {'kills': 1, 'assists': 1, 'deaths': False}
-    },
-    {
-        'Shadow': {'kills': 2, 'assists': 1, 'deaths': False},
-        'Blaze': {'kills': 1, 'assists': 0, 'deaths': True},
-        'Viper': {'kills': 0, 'assists': 2, 'deaths': False},
-        'Frost': {'kills': 1, 'assists': 1, 'deaths': True},
-        'Reaper': {'kills': 1, 'assists': 1, 'deaths': False}
-    },
-    {
-        'Shadow': {'kills': 1, 'assists': 2, 'deaths': True},
-        'Blaze': {'kills': 0, 'assists': 1, 'deaths': False},
-        'Viper': {'kills': 2, 'assists': 0, 'deaths': True},
-        'Frost': {'kills': 1, 'assists': 1, 'deaths': False},
-        'Reaper': {'kills': 1, 'assists': 1, 'deaths': True}
-    }
-]
-
 
 def calculate_score(player_stats):
     """Calcula la puntuación del jugador en una ronda."""
@@ -46,11 +8,11 @@ def calculate_score(player_stats):
     return (kills * 3) + (assists * 1) - (1 if deaths else 0)
 
 
-def calculate_mvp(team):
+def calculate_mvp(round):
     """Calcula el MVP de la ronda."""
     player_scores = {}
 
-    for player, stats in team.items():
+    for player, stats in round.items():
         player_scores[player] = calculate_score(stats)
 
     mvp = max(player_scores, key=player_scores.get)
@@ -60,8 +22,10 @@ def calculate_mvp(team):
 
 def update_stats(team, round, mvp):
     """Actualiza las estadísticas tras cada ronda, la primer ronda inicializa todas las estadísticas."""
+    
     # Iterar sobre los jugadores y sus estadísticas en la ronda
     for player, stats in round.items():
+        
         # Si el jugador ya existe en el equipo, actualizamos sus estadísticas
         if player in team:
             team[player]['kills'] += stats['kills']
@@ -98,10 +62,3 @@ def show_round_stats(team, mvp, round):
     print("MVP de la ronda: ", mvp)
     print("--------------------------------------------------------")
 
-
-total_team = {}
-
-for round_num, round in enumerate(rounds):
-    mvp_player = calculate_mvp(round)
-    total_team = update_stats(total_team, round, mvp_player)
-    show_round_stats(total_team, mvp_player, round_num + 1)
